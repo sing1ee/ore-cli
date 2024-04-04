@@ -72,7 +72,6 @@ impl Miner {
                             .ok();
                     }
                 }
-                println!("try bus: {}", bus_id);
                 // Submit request.
                 let bus = self.find_bus_id(treasury.reward_rate).await;
                 let bus_rewards = (bus.rewards as f64) / (10f64.powf(ore::TOKEN_DECIMALS as f64));
