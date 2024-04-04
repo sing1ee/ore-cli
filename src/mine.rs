@@ -82,7 +82,7 @@ impl Miner {
                         .expect("Transaction failed");
                     needs_reset = false;
                 }
-
+                println!("try bus: {}", bus_id);
                 // Submit request.
                 let ix_mine = ore::instruction::mine(
                     signer.pubkey(),
@@ -105,8 +105,9 @@ impl Miner {
                                 break 'submit;
                             } else {
                                 stdout
-                                    .write_all(format!("\n{:?} \n", msg.to_string()).as_bytes())
+                                    .write_all(format!("\nAA{:?} \n", msg.to_string()).as_bytes())
                                     .ok();
+                                invalid_busses.push(bus_id);
                             }
                         }
                         _ => {

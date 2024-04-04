@@ -21,7 +21,7 @@ use crate::Miner;
 
 const RPC_RETRIES: usize = 1;
 const GATEWAY_RETRIES: usize = 10;
-const CONFIRM_RETRIES: usize = 10;
+const CONFIRM_RETRIES: usize = 2;
 
 impl Miner {
     pub async fn send_and_confirm(&self, ixs: &[Instruction]) -> ClientResult<Signature> {
@@ -161,11 +161,12 @@ impl Miner {
                         }
 
                         // Retry confirm
-                        std::thread::sleep(Duration::from_millis(500));
+                        std::thread::sleep(Duration::from_millis(5));
                         confirm_check += 1;
                         if confirm_check.gt(&CONFIRM_RETRIES) {
                             break 'confirm;
                         }
+                        // println!("{}", "confirm retry")
                     }
                 }
                 Err(err) => {
@@ -175,7 +176,7 @@ impl Miner {
             stdout.flush().ok();
 
             // Retry with new hash
-            std::thread::sleep(Duration::from_millis(1000));
+            std::thread::sleep(Duration::from_millis(1));
             (hash, slot) = client
                 .get_latest_blockhash_with_commitment(CommitmentConfig::confirmed())
                 .await
