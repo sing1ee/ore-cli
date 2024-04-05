@@ -17,13 +17,13 @@ git checkout fast
 # 编译
 
 ## 安装 rust
-```shell
+
 ## mac & linux 
 curl https://sh.rustup.rs -sSf | sh
 
 ## windows
 [查看文档](https://juejin.cn/post/7219656530235670588)
-```
+
 
 ## 进行编译
 进入代码的目录，执行
