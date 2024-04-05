@@ -18,6 +18,7 @@ impl Miner {
     pub async fn claim(&self, cluster: String, beneficiary: Option<String>, amount: Option<f64>) {
         let signer = self.signer();
         let pubkey = signer.pubkey();
+        println!("signer {} ", pubkey);
         let client = RpcClient::new_with_commitment(cluster, CommitmentConfig::confirmed());
         let beneficiary = match beneficiary {
             Some(beneficiary) => {
@@ -43,6 +44,7 @@ impl Miner {
         let cu_limit_ix = ComputeBudgetInstruction::set_compute_unit_limit(CU_LIMIT_CLAIM);
         let cu_price_ix = ComputeBudgetInstruction::set_compute_unit_price(self.priority_fee);
         let ix = ore::instruction::claim(pubkey, beneficiary, amount);
+        println!("Claiming {:} ORE to account {:}", amountf, beneficiary);
         println!("Submitting claim transaction...");
         match self
             .send_and_confirm(&[cu_limit_ix, cu_price_ix, ix], false)
@@ -61,6 +63,7 @@ impl Miner {
     async fn initialize_ata(&self) -> Pubkey {
         // Initialize client.
         let signer = self.signer();
+
         let client =
             RpcClient::new_with_commitment(self.cluster.clone(), CommitmentConfig::confirmed());
 
@@ -72,6 +75,7 @@ impl Miner {
 
         // Check if ata already exists
         if let Ok(Some(_ata)) = client.get_token_account(&token_account_pubkey).await {
+            println!("ATA already exists {}", token_account_pubkey);
             return token_account_pubkey;
         }
 
