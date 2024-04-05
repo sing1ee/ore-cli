@@ -19,7 +19,9 @@ git checkout fast
 ## 安装 rust
 
 ## mac & linux 
+```shell
 curl https://sh.rustup.rs -sSf | sh
+```
 
 ## windows
 [查看文档](https://juejin.cn/post/7219656530235670588)
