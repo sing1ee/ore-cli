@@ -3,7 +3,7 @@
 ```shell
 # 首先
 git clone https://github.com/sing1ee/ore-cli.git
-# 其次
+# 进入项目目录，执行切换分支
 git checkout fast
 ```
 
